@@ -1,0 +1,15 @@
+---
+- name: Install MariaDB Server and Python MySQL library
+  become: true
+  apt:
+    name:
+      - mariadb-server
+      - python3-pymysql
+    state: latest
+
+- name: Configure MariaDB
+  become: true
+  template:
+    src: 99-openstack.cnf.j2
+    dest: /etc/mysql/mariadb.conf.d/99-openstack.cnf
+  notify: restart mariadb

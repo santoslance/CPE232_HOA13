@@ -1,0 +1,25 @@
+---
+- name: Install NTP packages
+  become: true
+  package:
+    name: chrony
+    state: present
+
+- name: Configure chrony
+  become: true
+  lineinfile:
+    path: /etc/chrony/chrony.conf
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - "server NTP_SERVER iburst"
+    - "allow 192.168.56.128/24"
+  notify: restart chrony
+
+- name: Ensure chrony service is enabled and started
+  become: true
+  systemd:
+    name: chrony
+    state: started
+    enabled: yes
+  notify: restart chrony

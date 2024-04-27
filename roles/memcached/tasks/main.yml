@@ -1,0 +1,16 @@
+---
+- name: Install Memcached and Python Memcache library
+  become: true
+  apt:
+    name:
+      - memcached
+      - python3-memcache
+    state: latest
+
+- name: Configure Memcached
+  become: true
+  lineinfile:
+    path: /etc/memcached.conf
+    regexp: '^(-l\s+)'
+    line: '\g<1>10.0.0.11'
+  notify: restart memcached

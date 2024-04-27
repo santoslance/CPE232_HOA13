@@ -1,0 +1,13 @@
+---
+- name: Install and configure OpenStack services
+  hosts: controller
+  become: true
+
+  roles:
+    - base
+    - ntp
+    - openstack-packages
+    - sql-database
+    - message-queue
+    - memcached
+    - etcd

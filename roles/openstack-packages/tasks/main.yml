@@ -1,0 +1,8 @@
+---
+- name: Install Nova Compute and OpenStack Client
+  become: true
+  apt:
+    name:
+      - nova-compute
+      - python3-openstackclient
+    state: latest
